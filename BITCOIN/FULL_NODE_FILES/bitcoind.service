@@ -1,0 +1,30 @@
+[Unit]
+# sobre
+Description=Bitcoin node
+# executar apos
+After=network.target
+
+[Service]
+# comando que sera executado
+ExecStart=/usr/local/bin/bitcoind -daemon -conf=/etc/opt/bitcoin/bitcoin.conf -pid=/var/opt/bitcoin/bitcoind.pid -datadir=/var/opt/bitcoin/
+# usuario e grupo para execucao
+User=bitcoin
+Group=bitcoin
+# espera ate a execucao do comando para identificar se o servico foi iniciado com sucesso
+Type=forking
+# define o caminho absolute para o identificador do processo
+PIDFile=/var/opt/bitcoin/bitcoind.pid
+# regra para reiniciar o servico sempre que ele nao for terminado com sucesso - exit code 0
+Restart=on-failure
+# define um /tmp e /var/tmp especifico para o servico
+PrivateTmp=true
+# monta o /usr, o /boot e o /etc como somente leitura
+ProtectSystem=full
+# define que o servico e seus filhos nao pode ganhar novas permissoes
+NoNewPrivileges=true
+# define um /dev especifico para o servico
+PrivateDevices=true
+
+[Install]
+# aguardar
+WantedBy=multi-user.target

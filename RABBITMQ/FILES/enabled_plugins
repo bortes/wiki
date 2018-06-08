@@ -1,0 +1,6 @@
+[
+  %% https://www.rabbitmq.com/management.html
+  rabbitmq_management, 
+  %% https://www.rabbitmq.com/web-stomp.html
+  rabbitmq_web_stomp
+].

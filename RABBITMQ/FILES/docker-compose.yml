@@ -1,0 +1,27 @@
+version: '2'
+
+volumes:
+  rabbit_logs:
+  rabbit_data:
+
+services:
+  server:
+    image: rabbitmq:alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "15676:15676"
+    restart: on-failure
+    ulimits:
+      nofile:
+        soft: 51200
+        hard: 51200
+    volumes:
+      - rabbit_logs:/var/log/rabbitmq
+      - rabbit_data:/var/lib/rabbitmq
+      - /etc/opt/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+      - /etc/opt/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+      - /etc/opt/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
+      - /etc/letsencrypt/live/demo.bortes.me/chain.pem:/certs/demo.bortes.me/ca.pem
+      - /etc/letsencrypt/live/demo.bortes.me/fullchain.pem:/certs/demo.bortes.me/cert.pem
+      - /etc/letsencrypt/live/demo.bortes.me/privkey.pem:/certs/demo.bortes.me/key.pem
